@@ -5,7 +5,7 @@ from django.db import models
 class Stock(models.Model):
 
 	title = models.CharField(max_length=20)
-	ID = models.CharField(max_length=20)
+	stock_id = models.IntegerField()
 	volume = models.IntegerField()
 	buy_price = models.FloatField()
 	sell_price = models.FloatField()
