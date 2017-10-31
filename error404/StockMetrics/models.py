@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 class Stock(models.Model):
@@ -34,14 +35,22 @@ class User(models.Model):
 
 class StockMetrics(models.Model):
 
-	title = models.CharField(max_length=20)
-	stock_id = models.IntegerField()
+	metrics = (
+        ('RSI','Relative Strength Index (RSI)'),
+        ('OBV','On Balance Volume (OBV)'),
+        ('AI','Aroon Indicator'),
+        ('SMA','Simple Moving Average'),
+        ('SO','Stochastic Oscillator'),
+    )
+	Stock_Name = models.CharField(max_length=20)
+	Metric_Title = models.CharField(max_length=20, choices=metrics, default=metrics[0])
+	
 
 	def _str_(self):
 		"""
         String for representing the Model object.
         """
-		return self.title
+		return self.Metric_Title
 
 
 class Portfolio(models.Model):

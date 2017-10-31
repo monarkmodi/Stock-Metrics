@@ -7,3 +7,4 @@ admin.site.register(Stock)
 admin.site.register(User)
 admin.site.register(StockMetrics)
 admin.site.register(Portfolio)
+
