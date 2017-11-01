@@ -21,10 +21,10 @@ class Stock(models.Model):
 
 class User(models.Model):
 
-	name = models.CharField(max_length=20)
+	name = models.CharField(max_length=30)
 	date_of_birth = models.DateField()
-	email = models.CharField(max_length=20)
-	password = models.CharField(max_length=20)
+	email = models.CharField(max_length=30)
+	password = models.CharField(max_length=30)
 	balance = models.FloatField()
 
 	def _str_(self):
