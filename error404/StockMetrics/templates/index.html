@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Stock Metrics Home</h1>
+
+  <p>Welcome to <em>StockMetrics</em>, a very basic Django website developed as a tutorial example on the Mozilla Developer Network.</p>
+
+<h2>Dynamic content</h2>
+
+  <p>The library has the following record counts:</p>
+  <ul>
+    <li><strong>Stocks:</strong> {{ num_stocks }}</li>
+    <li><strong>Users:</strong> {{ num_users }}</li>
+    <li><strong>Stocks containing GOOG:</strong> {{ num_stocks_GOOG }} </li>
+  </ul>
+
+  <p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+
+{% endblock %}
