@@ -42,9 +42,9 @@ class StockMetrics(models.Model):
         ('SMA','Simple Moving Average'),
         ('SO','Stochastic Oscillator'),
     )
-	Stock_Name = models.CharField(max_length=20)
-	Metric_Title = models.CharField(max_length=20, choices=metrics, default=metrics[0])
 	
+	Metric_Title = models.CharField(max_length=20, choices=metrics, default=metrics[0])
+	StockName = models.CharField(max_length=20)
 
 	def _str_(self):
 		"""
