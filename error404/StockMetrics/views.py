@@ -9,7 +9,8 @@ def index(request):
     """
     # Generate counts of some of the main objects
     num_stocks=Stock.objects.all().count()
-    num_users=User.objects.all().count()
+    lst = list(User.objects.values('name'))
+    num_users = [d['name'] for d in lst]
     num_stocks_GOOG = Stock.objects.filter(title__contains = 'GOOG').count()
 
     # Number of visits to this view, as counted in the session variable.
@@ -21,4 +22,14 @@ def index(request):
         request,
         'index.html',
         context={'num_stocks':num_stocks,'num_users':num_users,'num_stocks_GOOG':num_stocks_GOOG},
+    )
+
+def portfolio(request):
+    
+    users = Portfolio.objects.all()
+    
+    return render(
+        request,
+        'portfolio.html',
+        context={'users':users},
     )

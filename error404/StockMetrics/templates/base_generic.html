@@ -22,9 +22,10 @@
       <div class="col-sm-2">
       {% block sidebar %}
       <ul class="sidebar-nav">
-          <li><a href="{% url 'index' %}">Home</a></li>
-          <li><a href="">All stocks</a></li>
-          <li><a href="">All users</a></li>
+          <li><a href="{% url 'index' %}">Stocks</a></li>
+          <li><a href="">Users</a></li>
+          <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
+          <li><a href="">StockMetrics</a></li>
       </ul>
      {% endblock %}
       </div>
