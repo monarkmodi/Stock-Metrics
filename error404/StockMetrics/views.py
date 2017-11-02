@@ -4,34 +4,41 @@ from django.shortcuts import render
 from .models import User, Stock, StockMetrics, Portfolio
 
 def index(request):
-    """
-    View function for home page of site.
-    """
-    # Generate counts of some of the main objects
-    num_stocks=Stock.objects.all().count()
-    lst = list(User.objects.values('name'))
-    num_users = [d['name'] for d in lst]
-    num_stocks_GOOG = Stock.objects.filter(title__contains = 'GOOG').count()
-
-    # Number of visits to this view, as counted in the session variable.
-    num_visits=request.session.get('num_visits', 0)
-    request.session['num_visits'] = num_visits+1
+        
+    all_stocks = list(Stock.objects.all())
     
     # Render the HTML template index.html with the data in the context variable
     return render(
         request,
         'index.html',
-        context={'num_stocks':num_stocks,'num_users':num_users,'num_stocks_GOOG':num_stocks_GOOG},
+        context={'all_stocks':all_stocks},
     )
 
 def portfolio(request):
+    all_portfolio = list(Portfolio.objects.all())
     
-    users = Portfolio.objects.all()
     
     return render(
         request,
         'portfolio.html',
-        context={'users':users},
+        context={'all_portfolio':all_portfolio},
     )
 
-    
+
+def user(request):
+    all_users = list(User.objects.all())
+
+    return render(
+        request,
+        'user.html',
+        context={'all_users':all_users},
+    )
+
+def stockMetric(request):
+    all_metrics = list(StockMetrics.objects.all())
+
+    return render(
+        request,
+        'stockMetric.html',
+        context={'all_metrics':all_metrics},
+    )
