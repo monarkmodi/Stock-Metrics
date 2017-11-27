@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
+
   {% block title %}<title>Stock Metrics</title>{% endblock %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-  
+
   <!-- Add additional CSS in static file -->
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
@@ -22,9 +22,9 @@
 <img src="/static/images/logo.png" class="img-rounded" alt="Logo">
 </center><br><br><br>
 <div class="container">
-  
 
-    
+
+
       {% block sidebar %}
       <div class="row">
         <div class="col-lg-12">
@@ -47,6 +47,9 @@
                         </li>&nbsp;&nbsp;&nbsp;&nbsp;
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'user' %}">Users</a>
+                        </li>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'order' %}">Order</a>
                         </li>&nbsp;&nbsp;&nbsp;&nbsp;
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Logout</a>

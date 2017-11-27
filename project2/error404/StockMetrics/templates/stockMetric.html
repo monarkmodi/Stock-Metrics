@@ -36,6 +36,9 @@
                             <a class="nav-link" href="{% url 'user' %}">Users</a>
                         </li>&nbsp;&nbsp;&nbsp;&nbsp;
                         <li class="nav-item">
+                            <a class="nav-link" href="{% url 'order' %}">Order</a>
+                        </li>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                         </li>
                     </ul>
@@ -43,7 +46,7 @@
             </nav>
         </div>
     </div><br><br>
-    
+
 <div class="row">
         <div class="col-lg-12">
             <table class="table table-striped">
@@ -52,8 +55,8 @@
         <tr>
             <th>Stock Name</th>
             <th>Metric Title</th>
-            
-            
+
+
         </tr>
     </thead>
     <tbody>
@@ -65,17 +68,17 @@
             <td>
                 {{ i.Metric_Title }}
             </td>
-            
+
             </tr>
             {% endfor %}
-    
+
     </tbody>
     </table>
     </div>
     </div><br><br>
     {% else %}
-    <span><a href="{% url 'login'%}">You are not logged in. Click here to Login</a></span>   
-   {% endif %} 
+    <span><a href="{% url 'login'%}">You are not logged in. Click here to Login</a></span>
+   {% endif %}
 </div>
 
 

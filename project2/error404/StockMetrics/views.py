@@ -4,9 +4,9 @@ from django.shortcuts import render
 from .models import User, Stock, StockMetrics, Portfolio
 
 def index(request):
-        
+
     all_stocks = list(Stock.objects.all())
-    
+
     # Render the HTML template index.html with the data in the context variable
     return render(
         request,
@@ -16,12 +16,22 @@ def index(request):
 
 def portfolio(request):
     all_portfolio = list(Portfolio.objects.all())
-    
-    
+
+
     return render(
         request,
         'portfolio.html',
         context={'all_portfolio':all_portfolio},
+    )
+
+def order(request):
+
+    all_stocks = list(Stock.objects.all())
+
+    return render(
+        request,
+        'order.html',
+        context={'all_stocks':all_stocks},
     )
 
 

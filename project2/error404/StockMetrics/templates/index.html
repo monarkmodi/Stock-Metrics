@@ -37,6 +37,9 @@
                             <a class="nav-link" href="{% url 'user' %}">Users</a>
                         </li>&nbsp;&nbsp;&nbsp;&nbsp;
                         <li class="nav-item">
+                            <a class="nav-link" href="{% url 'order' %}">Order</a>
+                        </li>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                         </li>
                     </ul>
@@ -44,7 +47,7 @@
             </nav>
         </div>
     </div><br><br>
-    
+
     <h2>Stock Metrics</h2><hr>
     <span>Stock Metrics is a cloud based stock analysis tool for traders. It fetches from a list of 8,000 stocks across the Nasdaq, and NYSE exchanges and performs Support Vector Regression based machine learning on historical values to forecast the open, close, high, low, and volume of the next business day for each stock our database.</span><br><br><br>
     <h2>Account Details</h2><hr><br>
@@ -52,7 +55,7 @@
     <span style="font-weight: 800">Portfolio Value: <a style="font-weight: 600;"> $2680.00</a></span><br>
     <span style="font-weight: 800">Net Profit/Loss: <a style="color:green; font-weight: 600;"> $486.12</a></span><br><br><br>
     <h2>Stock Data</h2>
-    
+
 <div class="row">
         <div class="col-lg-12">
             <table class="table table-striped">
@@ -64,8 +67,8 @@
             <th>Volume</th>
             <th>Buy Price</th>
             <th>Sell Price</th>
-           
-            
+
+
         </tr>
     </thead>
     <tbody>
@@ -86,18 +89,18 @@
             <td>
                 {{ i.sell_price }}
             </td>
-            
+
             </tr>
             {% endfor %}
-    
+
     </tbody>
     </table>
     </div>
     </div><br><br>
-    
+
     {% else %}
-    <span><a href="{% url 'login'%}">You are not logged in. Click here to Login</a></span>   
-   {% endif %} 
+    <span><a href="{% url 'login'%}">You are not logged in. Click here to Login</a></span>
+   {% endif %}
 </div>
 
 
