@@ -1,10 +1,16 @@
 from django.db import models
-
+from django.utils.translation import ugettext, ugettext_lazy as _
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 class Stock(models.Model):
 
+	user = models.IntegerField()
+	symbol = models.CharField(_('Symbol'), max_length=5)
+
+
+class StockData(models.Model):
 	title = models.CharField(max_length=20)
 	stock_id = models.IntegerField()
 	volume = models.IntegerField()
@@ -16,8 +22,6 @@ class Stock(models.Model):
         String for representing the Model object.
         """
 		return self.title
-
-
 
 class User(models.Model):
 

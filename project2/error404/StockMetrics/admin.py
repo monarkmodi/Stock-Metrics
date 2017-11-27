@@ -1,9 +1,9 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Stock, User, StockMetrics, Portfolio
+from .models import Stock, User, StockMetrics, Portfolio, StockData
 
-#admin.site.register(Stock)
+admin.site.register(Stock)
 #admin.site.register(User)
 #admin.site.register(StockMetrics)
 #admin.site.register(Portfolio)
@@ -15,7 +15,7 @@ class StockDisplay(admin.ModelAdmin):
     
 
 # Register the admin class with the associated model
-admin.site.register(Stock, StockDisplay)
+admin.site.register(StockData, StockDisplay)
 
 
 # Register the Admin classes for Book using the decorator
