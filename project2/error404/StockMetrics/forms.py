@@ -16,3 +16,9 @@ class StockForm(forms.Form):
             'invalid': _("This value may contain only latin letters or digits"),
         })
     
+class AccountForm(forms.Form):
+    funds_available = forms.FloatField(label='funds_avilable')
+    port_value = forms.FloatField(label='port_value')
+    profit_loss = forms.FloatField(label='profit_loss')
+
+    

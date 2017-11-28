@@ -16,6 +16,9 @@ class StockData(models.Model):
 	volume = models.IntegerField()
 	buy_price = models.FloatField()
 	sell_price = models.FloatField()
+	funds_available = models.FloatField()
+	port_value = models.FloatField()
+	profit_loss = models.FloatField()
 
 	def _str_(self):
 		"""

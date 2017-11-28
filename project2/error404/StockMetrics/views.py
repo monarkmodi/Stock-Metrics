@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 from .models import User, Stock, StockMetrics, Portfolio, StockData
-from .forms import StockForm
+from .forms import StockForm, AccountForm
 from .client import get_price_data, get_prices_data, get_prices_time_data
 import numpy
 
@@ -10,11 +10,23 @@ def index(request):
 
     all_stocks = list(StockData.objects.all())
 
+    user = request.user.id
+    sym = []
+    form = AccountForm()
+    if request.method == 'POST':
+        form = AccountForm(request.POST)
+        if form.is_valid():
+            symbol = form.cleaned_data['funds_available']
+            sym.append(symbol)
+            print(symbol)
+            StockData(funds_available=symbol).save()
+        
+
     # Render the HTML template index.html with the data in the context variable
     return render(
         request,
         'index.html',
-        context={'all_stocks':all_stocks},
+        context={'all_stocks':all_stocks, 'sym':sym},
     )
 
 @login_required
