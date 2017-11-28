@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 from .models import User, Stock, StockMetrics, Portfolio, StockData
-from .forms import StockForm
-from .client import get_price_data, get_prices_data, get_prices_time_data
+from .forms import StockForm, OrderForm
+from googlefinance.client import get_price_data, get_prices_data, get_prices_time_data
 import numpy
 
 def index(request):
@@ -30,7 +30,7 @@ def portfolio(request):
             symbol = form.cleaned_data['symbol'].upper()
             sym.append(symbol)
             Stock(user=user, symbol=symbol).save()
-        
+            
             param = {'q':symbol,'i':"86400",'x':"INDEXDJX",'p':"1M"}
             data2 = get_price_data(param)
             data = data2[-1]
@@ -44,7 +44,14 @@ def portfolio(request):
 @login_required
 def order(request):
     user = request.user.id
+    total = 0.0
+    high = None
+    low = None
+    close = None
+    vol = None
+    Open = None
     all_stocks = list(Stock.objects.all())
+    info = []
     print(user)
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -52,10 +59,18 @@ def order(request):
             symbol = form.cleaned_data['symbol'].upper()
             shares = form.cleaned_data['shares']
             
-            param = {'q':symbol,'i':"86400",'x':"INDEXDJX",'p':"1M"}
-            data2 = get_price_data(param)
+            param = {'q':symbol,'i':"86400",'x':"INDEXDJX",'p':"1D"}
+            stock = get_price_data(param)
 #            print(type(data2))
-            print('data2',data2.at('close'))
+#            print(len(data2))
+            if len(stock) != 0:
+                Open = stock.iat[0,0]
+                high = stock.iat[0,1]
+                low = stock.iat[0,2]
+                close = stock.iat[0,3]
+                vol = stock.iat[0,4]
+                total = float(shares) * float(stock.iat[0,3])
+#            print('data2',data2.iat[0,3])
 #            infos = [data] if data.__class__ == dict else data
             
             print(symbol, shares)
@@ -67,7 +82,7 @@ def order(request):
     return render(
         request,
         'order.html',
-        context={'all_stocks':all_stocks, 'form':form},
+        context={'all_stocks':all_stocks, 'form':form, 'stock_open':Open, 'stock_high':high, 'stock_low':low, 'stock_close':close, 'stock_vol':vol, 'symbol':symbol, 'total':total},
     )
 
 

@@ -81,30 +81,35 @@
             </div>
             <div class="row">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span style="margin-top:10px; font-size:13pt;">Total Amount: </span>
+                <span style="margin-top:10px; font-size:13pt;">Total Amount: {{ total }}</span>
                 <div style="margin-left:10px; margin-top: 10px; width:40%; line-height: 2;color:#6E6A6B;font-size: 14pt;text-align:left;float: middle; height:2em; " id="total"></div>
             </div>
-            <button class="btn btn-success" type="submit", style="margin-top:15px;">Review Order</button>
+            <button class="btn btn-success" type="submit", style="margin-top:15px;">Calculate</button>
+            <button class="btn btn-success" type="button", style="margin-top:15px; margin-left:15px; width:100px;">Order</button>
           </div>
           </form>
         <div style="float: right; margin: 0px; padding: 1em; width:50%;">
           <table style="border: 1px solid lightgray;width:70%;">
             <tr>
-              <th>APPL: Apple: Inc</th>
+              <th>Symbol: {{ symbol }}</th>
             </tr>
             <tr>
-              <th id="id">ID: </th>
+              <th>Open: {{ stock_open }} </th>
             </tr>
             <tr>
-              <th>Volume: </th>
+              <th>High: {{ stock_high }}</th>
             </tr>
             <tr>
               <!-- Sell Price -->
-              <th>Sell: </th>
+              <th>Low: {{ stock_low }}</th>
             </tr>
             <tr>
               <!-- Buy Price -->
-              <th>Buy: </th>
+              <th>Volume: {{ stock_vol }}</th>
+            </tr>
+            <tr>
+              <!-- Buy Price -->
+              <th>Volume: {{ stock_close }}</th>
             </tr>
           </table>
         </div>
@@ -117,6 +122,11 @@
 
 </div>
 
+
+<br><br>
+<span style="color:red;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Only stocks from stock exchange INDEXDJX are accepted. You may try symbol 'DJI' </span>
+<br><br>
+<span style="color:red;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Order' button is currently unavailable</span>
 
 {% endblock %}
 
