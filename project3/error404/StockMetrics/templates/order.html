@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang = "en">
+{% block content %}
+
+<head>
+    <title>Order</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <style media="screen">
+      tr {padding: 1em;}
+      th {padding: 1em;}
+    </style>
+</head>
+
+<body>
+<center>
+<img src="/static/images/logo.png" class="img-rounded" alt="Logo">
+</center><br><br><br>
+<div class="container">
+    <div class="row">
+    {% if user.is_authenticated %}
+        <div class="col-lg-12">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'index' %}">Stocks</a>
+                        </li>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'portfolio' %}">Portfolio</a>
+                        </li>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'stockMetric' %}">Stock Metrics</a>
+                        </li>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'user' %}">Users</a>
+                        </li>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'order' %}">Order</a>
+                        </li>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div><br><br>
+    <div class="row">
+      <div style="padding: 1em; overflow: hidden; width:50%;">
+        <h3>New Order</h3>
+        <form action="{% url 'order' %}" method="post">
+          {% csrf_token %}
+          <!-- {{form}} -->
+          <!-- <input type="submit" value="Submit" /> -->
+
+        <div class="row">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="margin-top:10px; font-size:15pt; font-weight: bold;">Shares: </span>&nbsp;
+                <div class="col-lg-6", style="margin-top:10px">
+                    <div class="input-group">
+                        <!-- <input type="text" class="form-control" placeholder="Type an Integer" id="shares"> -->
+                        {{ form.shares }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="margin-top:10px; font-size:14pt; font-weight: bold;">Symbol: </span>
+                <div class="col-lg-6", style="margin-top:10px">
+                    <div class="input-group">
+                        <!-- <input type="text" class="form-control" placeholder="Symbol...(GOOG, NKE, NVDA..)"  id="symbol"> -->
+                        {{ form.symbol }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="margin-top:10px; font-size:13pt;">Total Amount: {{ total }}</span>
+                <div style="margin-left:10px; margin-top: 10px; width:40%; line-height: 2;color:#6E6A6B;font-size: 14pt;text-align:left;float: middle; height:2em; " id="total"></div>
+            </div>
+            <button class="btn btn-success" type="submit", style="margin-top:15px;">Calculate</button>
+            <button class="btn btn-success" type="button", style="margin-top:15px; margin-left:15px; width:100px;">Order</button>
+          </div>
+          </form>
+        <div style="float: right; margin: 0px; padding: 1em; width:50%;">
+          <table style="border: 1px solid lightgray;width:70%;">
+            {% for i in infos %}
+            <tr>
+              <th>Symbol: {{ symbol }}</th>
+            </tr>
+            <tr>
+              <th>Open: {{ i.Open }} </th>
+            </tr>
+            <tr>
+              <th>High: {{ i.High }}</th>
+            </tr>
+            <tr>
+              <!-- Sell Price -->
+              <th>Low: {{ i.Low }}</th>
+            </tr>
+            <tr>
+              <!-- Buy Price -->
+              <th>Volume: {{ i.Close }}</th>
+            </tr>
+            <tr>
+              <!-- Buy Price -->
+              <th>Close: {{ i.Volume }}</th>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+    </div>
+
+
+    {% else %}
+    <span><a href="{% url 'login'%}">You are not logged in. Click here to Login</a></span>
+   {% endif %}
+
+</div>
+
+
+<br><br>
+<span style="color:red;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Only stocks from stock exchange INDEXDJX are accepted. You may try symbol 'DJI' </span>
+<br><br>
+<span style="color:red;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Order' button is currently unavailable</span>
+
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+        integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+  var shares = document.getElementById('shares');
+  var symbol = document.getElementById('symbol');
+  var id = document.getElementById('id');
+  var total = document.getElementById('total');
+
+
+  // widget.init(stocks);
+  var stock_data = (("{{ all_stocks | safe}}").replace(/&(l|g|quo)t;/g, function(a,b){
+            return {
+                l   : '<',
+                g   : '>',
+                quo : '"'
+            }[b];
+        }));
+
+  stock_data = stock_data.replace(/u'/g, '\'')
+  stock_data = stock_data.replace(/'/g, '\"')
+
+  var stocks = JSON.parse( stock_data );
+
+  function existenceOfStock(name) {
+    var count = 0;
+    for(var stock in stocks) {
+      total.innerHTML = stocks[stock].title;
+
+
+      // count ++;
+      // if(name == stocks[stock].title) {
+      //   total.innerHTML = "True";
+      //   // return true;
+      // }
+    }
+    // total.innerHTML = String(count);
+    // return false;
+  }
+
+  shares.onkeyup = function() {
+      if(symbol.value === null || symbol.value === "") {
+          total.innerHTML = "NULL"
+      }
+      else {
+          existenceOfStock(symbol.value);
+          // if(existenceOfStock(symbol.value)) {
+          //     total.innerHTML = "YES"
+          // }
+          // else {
+          //     total.innerHTML = "NULL"
+          // }
+      }
+  }
+
+  symbol.onkeyup = function() {
+      if(shares.value === null || shares.value === "") {
+          total.innerHTML = "NULL"
+      }
+      else {
+        existenceOfStock(symbol.value);
+        // if(existenceOfStock(symbol.value)) {
+        //     total.innerHTML = "YES"
+        // }
+        // else {
+        //     total.innerHTML = "NULL"
+        // }
+      }
+  }
+</script>
+</body>
+
+
+</html>
