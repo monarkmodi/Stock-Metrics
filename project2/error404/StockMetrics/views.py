@@ -41,14 +41,33 @@ def portfolio(request):
     return render(request, 'portfolio.html', {'all_portfolio':all_portfolio,'form': form,
                                                      'infos': infos, 'sym':sym})
 
+@login_required
 def order(request):
-
+    user = request.user.id
     all_stocks = list(Stock.objects.all())
+    print(user)
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            symbol = form.cleaned_data['symbol'].upper()
+            shares = form.cleaned_data['shares']
+            
+            param = {'q':symbol,'i':"86400",'x':"INDEXDJX",'p':"1M"}
+            data2 = get_price_data(param)
+#            print(type(data2))
+            print('data2',data2.at('close'))
+#            infos = [data] if data.__class__ == dict else data
+            
+            print(symbol, shares)
+    else:
+        form = OrderForm()
+#        symbol = form.cleaned_data['symbol'].upper()
+#        shares = form.cleaned_data['shares']
 
     return render(
         request,
         'order.html',
-        context={'all_stocks':all_stocks},
+        context={'all_stocks':all_stocks, 'form':form},
     )
 
 
