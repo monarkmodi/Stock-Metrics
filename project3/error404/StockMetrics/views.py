@@ -51,6 +51,7 @@ def order(request):
     vol = None
     Open = None
     all_stocks = list(Stock.objects.all())
+    symbol = None
     info = []
     print(user)
     if request.method == 'POST':
