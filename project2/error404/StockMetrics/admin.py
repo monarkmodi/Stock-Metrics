@@ -26,8 +26,8 @@ class UserDisplay(admin.ModelAdmin):
 admin.site.register(User, UserDisplay)
 
 class MetricsDisplay(admin.ModelAdmin):
-	list_display = ('Metric_Title','StockName')
-	fields = ['Metric_Title','StockName']
+	list_display = ('Metric_Title','StockName','Metric_value')
+	fields = ['Metric_Title','StockName','Metric_value']
 
 admin.site.register(StockMetrics, MetricsDisplay)
 

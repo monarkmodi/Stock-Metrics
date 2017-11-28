@@ -49,6 +49,7 @@ class StockMetrics(models.Model):
 	
 	Metric_Title = models.CharField(max_length=20, choices=metrics, default=metrics[0])
 	StockName = models.CharField(max_length=20)
+	Metric_value = models.FloatField()
 
 	def _str_(self):
 		"""

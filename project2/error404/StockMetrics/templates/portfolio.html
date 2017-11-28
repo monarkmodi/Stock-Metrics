@@ -95,6 +95,38 @@
         </div>
         </div><br><br>
         {% endif %}
+
+        <span style="font-weight: 600">Recently searched (Last 5): </span><br><br>
+        <div class="row">
+            <div class="col-lg-12">
+            {% if all_portfolio %}
+                <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for i in all_portfolio %}
+            <tr>
+
+                <td>
+                    {{ i.symbol }}
+                </td>
+                
+                
+                </tr>
+                {% endfor %}
+
+        </tbody>
+        </table>
+        </div>
+        </div><br><br>
+        {% endif %}
+
+
         <form method="post" action="{% url 'portfolio' %}" class="form-inline">
     <div class="form-group ">
     <span>Enter Symbol:</span>&nbsp;&nbsp;
@@ -110,6 +142,9 @@
 
 <br><br>
 <span style="color:red;">Errors are not being handled currently so please enter a valid stock symbol like AAPL, MSFT, FIT, GOOG, NVDA for now. Invalid symbol will result in the breakage of page.</span>
+<br><br>
+<span style="color:red;">Stock data is being saved in the Database but due to some dependency issue, we are not able to show it in the HTML. It is being updated in the backend. We will be working on it soon.</span><br><br>
+<span style="color:red;">Currently, only one stock is visible at a time and the table is not being populated.</span>
 {% endblock  %}
 
         

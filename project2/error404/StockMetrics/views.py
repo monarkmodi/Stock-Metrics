@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import User, Stock, StockMetrics, Portfolio, StockData
 from .forms import StockForm
 from .client import get_price_data, get_prices_data, get_prices_time_data
+import numpy
 
 def index(request):
 
@@ -28,16 +29,16 @@ def portfolio(request):
         if form.is_valid():
             symbol = form.cleaned_data['symbol'].upper()
             sym.append(symbol)
-            
-            
+            Stock(user=user, symbol=symbol).save()
+        
             param = {'q':symbol,'i':"86400",'x':"INDEXDJX",'p':"1M"}
             data2 = get_price_data(param)
             data = data2[-1]
             infos = [data] if data.__class__ == dict else data
-            
 
+    all_portfolio = list(Stock.objects.all().order_by('-id')[:5])
 
-    return render(request, 'portfolio.html', {'form': form,
+    return render(request, 'portfolio.html', {'all_portfolio':all_portfolio,'form': form,
                                                      'infos': infos, 'sym':sym})
 
 def order(request):
@@ -60,11 +61,48 @@ def user(request):
         context={'all_users':all_users},
     )
 
+@login_required
 def stockMetric(request):
     all_metrics = list(StockMetrics.objects.all())
+    infos = []
+    sym = []
+    form = StockForm()
 
-    return render(
-        request,
-        'stockMetric.html',
-        context={'all_metrics':all_metrics},
-    )
+    val = 0.0
+    upward = []
+    up_mean = 0.0
+    downward = []
+    down_mean = 0.0
+    val_array = []
+    symbol = ''
+    a = numpy.random.uniform(low=0.1, high=99.9, size=10)
+    Metric_value = dict(enumerate(a))
+    if request.method == 'POST':
+        form = StockForm(request.POST)
+        if form.is_valid():
+            for i in all_metrics:
+                symbol = i.StockName
+            sym.append(symbol)
+            
+            
+            param = {'q':symbol,'i':"86400",'x':"INDEXDJX",'p':"1M"}
+            data2 = get_price_data(param)
+            data = data2[-1]
+            print(symbol)
+            
+            for i in all_metrics:
+                for j in data2:
+                    if i.Metric_Title == 'RSI':
+                        if (j.Close > j.Open):
+                            upward.append(j.Close - j.Open)
+                            up_mean = numpy.mean(upward)
+                        else:
+                            downward.append(j.Open - j.Close)
+                            down_mean = numpy.mean(downward)
+                        val = 100 - (100/(1 + (up_mean/down_mean)))
+                        print(val)
+                        val_array.append(val)
+
+
+    return render(request, 'stockMetric.html', {'all_metrics':all_metrics,'form': form,
+                                                     'Metric_value':Metric_value, 'sym':sym})
