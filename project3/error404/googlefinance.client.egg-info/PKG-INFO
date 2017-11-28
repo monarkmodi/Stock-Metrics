@@ -6,6 +6,7 @@ Home-page: https://github.com/pdevty/googlefinance-client-python
 Author: pdevty
 Author-email: p.dev.ty@gmail.com
 License: MIT
+Description-Content-Type: UNKNOWN
 Description: googlefinance.client is a python client library for google finance api.
 Keywords: googlefinance
 Platform: UNKNOWN

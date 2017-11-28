@@ -13,6 +13,7 @@ StockMetrics/migrations/0002_auto_20171127_1609.py
 StockMetrics/migrations/0003_auto_20171127_1648.py
 StockMetrics/migrations/0004_auto_20171127_1650.py
 StockMetrics/migrations/0005_stockdata.py
+StockMetrics/migrations/0006_stockmetrics_metric_value.py
 StockMetrics/migrations/__init__.py
 error404/__init__.py
 error404/settings.py

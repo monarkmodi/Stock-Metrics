@@ -60,17 +60,24 @@ def order(request):
             symbol = form.cleaned_data['symbol'].upper()
             shares = form.cleaned_data['shares']
             
-            param = {'q':symbol,'i':"86400",'x':"INDEXDJX",'p':"1D"}
+            param = {'q':symbol,'i':"86400",'x':"INDEXDJX",'p':"1Y"}
             stock = get_price_data(param)
+#            print(param)
+#            print(stock)
 #            print(type(data2))
 #            print(len(data2))
             if len(stock) != 0:
-                Open = stock.iat[0,0]
-                high = stock.iat[0,1]
-                low = stock.iat[0,2]
-                close = stock.iat[0,3]
-                vol = stock.iat[0,4]
+                index = len(stock) - 1
+                Open = stock.iat[index,0]
+                high = stock.iat[index,1]
+                low = stock.iat[index,2]
+                close = stock.iat[index,3]
+                vol = stock.iat[index,4]
                 total = float(shares) * float(stock.iat[0,3])
+                
+                print(total, Open)
+            else:
+                print("Not Returned")
 #            print('data2',data2.iat[0,3])
 #            infos = [data] if data.__class__ == dict else data
             
