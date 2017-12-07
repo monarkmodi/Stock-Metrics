@@ -4,7 +4,7 @@ from datetime import datetime
 import pandas as pd
 
 def get_price_data(query):
-	r = requests.get("https://www.google.com/finance/getprices", params=query)
+	r = requests.get("https://finance.google.com/finance/getprices", params=query)
 	lines = r.text.splitlines()
 	data = []
 	index = []
