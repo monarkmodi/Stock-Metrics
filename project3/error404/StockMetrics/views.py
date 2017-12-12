@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-from .models import User, Stock, StockMetrics, Portfolio, StockData
+from .models import User, Stock, StockMetrics, Portfolio, StockData, OrderData, PortfolioData
 from .forms import StockForm, AccountForm, OrderForm
 from .client import get_price_data, get_prices_data, get_prices_time_data
 import numpy
 
 def index(request):
 
-    all_stocks = list(StockData.objects.all())
+    all_stocks = list(OrderData.objects.all().reverse())
+    print(all_stocks)
 
     user = request.user.id
     sym = []
@@ -43,13 +44,15 @@ def portfolio(request):
             sym.append(symbol)
             Stock(user=user, symbol=symbol).save()
         
-            param = {'q':symbol,'i':"86400",'x':"INDEXDJX",'p':"1M"}
+            param = {'q':symbol,'i':"86400",'x':"NASD",'p':"1Y"}
             data2 = get_price_data(param)
             data = data2[-1]
+            PortfolioData(symbol=symbol, open_price=data['Open'], high_price=data['High'], low_price=data['Low'], close_price=data['Close'], volume=data['Volume']).save()
             print(data2)
             infos = [data] if data.__class__ == dict else data
 
-    all_portfolio = list(Stock.objects.all().order_by('-id')[:5])
+    all_portfolio2 = list(PortfolioData.objects.all())[::-1]
+    all_portfolio = all_portfolio2[:5]
 
     return render(request, 'portfolio.html', {'all_portfolio':all_portfolio,'form': form,
                                                      'infos': infos, 'sym':sym})
@@ -75,9 +78,15 @@ def order(request):
             symbol = form.cleaned_data['symbol'].upper()
             shares = form.cleaned_data['shares']
             
-            param = {'q':symbol,'i':"86400",'x':"INDEXDJX",'p':"1M"}
+            param = {'q':symbol,'i':"86400",'x':"NASD",'p':"1M"}
             data2 = get_price_data(param)
             data = data2[-1]
+            openPrice = data['Open']
+            closePrice = data['Close']
+            profit = (closePrice - openPrice) * float(shares)
+
+            totalPrice = openPrice * float(shares)
+            OrderData(symbol=symbol, number=shares, openPrice=openPrice, closePrice=closePrice, profit=profit, totalPrice=totalPrice).save()
             print(data2)
             infos = [data] if data.__class__ == dict else data
             total = data['Close'] * float(shares)

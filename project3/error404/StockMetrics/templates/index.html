@@ -51,45 +51,50 @@
     <h2>Stock Metrics</h2><hr>
     <span>Stock Metrics is a cloud based stock analysis tool for traders. It fetches from a list of 8,000 stocks across the Nasdaq, and NYSE exchanges and performs Support Vector Regression based machine learning on historical values to forecast the open, close, high, low, and volume of the next business day for each stock our database.</span><br><br><br>
     <h2>Account Details</h2><hr><br>
-    <span style="font-weight: 800">Funds Available: <a style="font-weight: 600">$1000.00</a></span><br>
-    <span style="font-weight: 800">Portfolio Value: <a style="font-weight: 600;"> $2680.00</a></span><br>
-    <span style="font-weight: 800">Net Profit/Loss: <a style="color:green; font-weight: 600;"> $486.12</a></span><br><br><br>
+    
+    <span style="font-weight: 800">Portfolio Value: <span id="port_val" style="font-weight: 600;"></span></span><br>
+    <span style="font-weight: 800">Net Profit/Loss: <span id="profitData" style="color:green; font-weight: 600;"></span></span><br><br><br>
     <h2>Stock Data</h2>
 
 <div class="row">
         <div class="col-lg-12">
-            <table class="table table-striped">
+            <table class="table table-striped" id="table1">
 
     <thead>
         <tr>
             <th>Title</th>
-            <th>Stock ID</th>
+            
             <th>Volume</th>
             <th>Buy Price</th>
             <th>Sell Price</th>
-
+            <th>Profit/Loss</th>
+            <th>Total Price</th>
 
         </tr>
     </thead>
     <tbody>
     {% for i in all_stocks %}
         <tr>
-            <td>
-                {{ i.title }}
+            <td >
+                {{ i.symbol }}
+            </td>
+            
+            <td id="number">
+                {{ i.number }}
+            </td>
+            <td class="openPrice">
+                {{ i.openPrice }}
             </td>
             <td>
-                {{ i.stock_id }}
-            </td>
-            <td>
-                {{ i.volume }}
-            </td>
-            <td>
-                {{ i.buy_price }}
-            </td>
-            <td>
-                {{ i.sell_price }}
+                {{ i.closePrice }}
             </td>
 
+            <td class="profit" style="color: {% if i.closePrice > i.openPrice %}green{% else %}red{% endif %};">
+                {{ i.profit }}
+            </td>
+            <td class="totalPrice">
+                {{ i.totalPrice }}
+            </td>
             </tr>
             {% endfor %}
 
@@ -111,6 +116,27 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
         integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
         crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    var cls = document.getElementById("table1").getElementsByTagName("td");
+    var sum = 0;
+    total = 0;
+    for (var i = 0; i < cls.length; i++){
+        if(cls[i].className == "profit"){
+            sum += isNaN(cls[i].innerHTML) ? 0 : parseFloat(cls[i].innerHTML);
+        }
+    }
+    for (var i = 0; i < cls.length; i++){
+        if(cls[i].className == "totalPrice"){
+            total += isNaN(cls[i].innerHTML) ? 0 : parseFloat(cls[i].innerHTML);
+        }
+    }
+    
+    document.getElementById('port_val').innerHTML = total;
+    document.getElementById('profitData').innerHTML = sum;
+
+
+</script>
 </body>
 
 </html>

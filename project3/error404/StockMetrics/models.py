@@ -10,6 +10,22 @@ class Stock(models.Model):
 	symbol = models.CharField(_('Symbol'), max_length=5)
 
 
+class OrderData(models.Model):
+	symbol = models.CharField(_('Symbol'), max_length=5)
+	number = models.IntegerField()
+	openPrice = models.FloatField()
+	closePrice = models.FloatField()
+	profit = models.FloatField()
+	totalPrice = models.FloatField()
+
+class PortfolioData(models.Model):
+	symbol = models.CharField(_('Symbol'), max_length=5)
+	open_price = models.FloatField()
+	high_price = models.FloatField()
+	low_price = models.FloatField()
+	close_price = models.FloatField()
+	volume = models.FloatField()
+
 class StockData(models.Model):
 	title = models.CharField(max_length=20)
 	stock_id = models.IntegerField()
