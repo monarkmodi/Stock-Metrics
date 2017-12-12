@@ -35,4 +35,4 @@ yahoo==0.1
 yql-finance==0.1.0
 ystockquote==0.2.4
 googlefinance.client==1.3.0
-
+psycopg2==2.4.4
