@@ -1,0 +1,61 @@
+{% extends "login.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+
+<center><p><font size="4.5" color="red">Your username and password didn't match. Please try again.</font></p></center>
+
+{% endif %}
+
+{% if next %}
+
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+
+{% endif %}
+
+<center>
+
+  <h2>Log in</h2>
+  <br></br>
+
+  <form method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+
+  <div>
+    <td>{{ form.username.label_tag }}</td>
+    <td>{{ form.username }}</td>
+
+  </div>
+  
+  <div>
+  <td>{{ form.password.label_tag }}</td>
+    <td>{{ form.password }}</td>
+  
+  </div>
+
+  <div>
+
+    <button type="submit" ><a style="color: white; text-decoration: none;">Log in</a></button><br>
+    <input type="hidden" name="next" value="{{ next }}" />
+  
+  </div>
+
+  </form>
+
+</center>
+
+{# Assumes you setup the password_reset view in your URLconf #}
+
+<center><label style="font-size: 18px"><p><a href="{% url 'password_reset' %}">Forgot your password?</a></p></label></center>
+
+<center><label style="font-size: 18px">Don't have an account ? Click<a href="signup.html"> here </a>to create one</label><br></center>
+
+<center><span style="color: red;">Use username as 'admin and password as 'admin</span></center>
+
+{% endblock %}
